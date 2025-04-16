@@ -1,18 +1,27 @@
-FROM node:22-alpine as build
+FROM php:8.2-fpm
 
-RUN apk upgrade && apk add git
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-RUN git clone https://github.com/ollama-webui/ollama-webui-lite.git app
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www
 
-RUN npm ci && npm run build
+COPY . .
 
-COPY server.js build
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-#FROM node:lts-alpine AS production
-#COPY --from=build /app/build .
-#COPY --from=build /app/node_modules .
-#
-#EXPOSE 3000
-#CMD ["node", "."]
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
+
+ajuste: Dockerfile compatível com Laravel
