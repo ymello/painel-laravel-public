@@ -24,4 +24,4 @@ EXPOSE 9000
 
 CMD ["php-fpm"]
 
-ajuste: Dockerfile compatível com Laravel
+
