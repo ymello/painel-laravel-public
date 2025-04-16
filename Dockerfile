@@ -20,6 +20,8 @@ WORKDIR /var/www
 
 COPY . .
 
+RUN apt-get update && apt-get install -y wget
+
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
@@ -28,4 +30,4 @@ EXPOSE 9000
 
 CMD ["php-fpm"]
 
-RUN apt-get update && apt-get install -y wget
+
