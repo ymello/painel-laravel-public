@@ -1,0 +1,17 @@
+{
+    "name": "filapanel/classic-theme",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Filapanel\\ClassicTheme\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dennis",
+            "email": "dennissmink@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
